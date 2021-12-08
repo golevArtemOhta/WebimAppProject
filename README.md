@@ -6,3 +6,5 @@ This app is test application for Webim company
 Сохранение состояния WebView при повороте экрана и навигация по системной кнопке Back также выполнена.
 
 Скриншоты экрана:
+
+![Image alt](https://github.com/golevArtemOhta/WebimAppProject/blob/master/WebimAppScreenshoots.png)
