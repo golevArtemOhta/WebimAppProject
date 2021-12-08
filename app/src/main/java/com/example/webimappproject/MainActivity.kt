@@ -1,7 +1,7 @@
 package com.example.webimappproject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.webimappproject.apiLogin.LoginFragment
 import com.example.webimappproject.databinding.ActivityMainBinding
@@ -14,13 +14,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        openFrag(LoginFragment.newInstance(), R.id.fragment)
+        if (savedInstanceState == null) {
+            openFragment(LoginFragment.newInstance(), R.id.fragment)
+        }
+
+
     }
 
-    private fun openFrag(f: Fragment, idHolder: Int){
+    private fun openFragment(fragment: Fragment, idHolder: Int) {
         supportFragmentManager
             .beginTransaction()
-            .replace(idHolder, f)
+            .replace(idHolder, fragment)
             .commit()
     }
 }

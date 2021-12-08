@@ -9,26 +9,15 @@ import kotlinx.coroutines.launch
 
 open class TicketsViewModel : ViewModel() {
 
-    val itemsCities = MutableLiveData<MutableList<String>>()
+    val itemsCities = MutableLiveData<List<Data>>()
     private val api = RetrofitFactory.new()
     private var job: Job? = null
 
-    fun request() {
+    fun request(token: String) {
         job?.cancel()
         job = viewModelScope.launch(Dispatchers.IO) {
-            val tickets = api.getTickets()
-            val ticketsList = mutableListOf<String>()
-
-            for (i in tickets.data) {
-                ticketsList.add(
-                    "${i.from} - " +
-                            "${i.dest} \n" +
-                            "Date: ${i.date} \n" +
-                            "Price: ${i.cost}"
-                )
-            }
-            itemsCities.postValue(ticketsList)
-
+            val tickets = api.getTickets(token)
+            itemsCities.postValue(tickets.data)
         }
 
     }

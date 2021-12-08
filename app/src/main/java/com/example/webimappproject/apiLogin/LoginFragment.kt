@@ -1,11 +1,11 @@
 package com.example.webimappproject.apiLogin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.webimappproject.R
 import com.example.webimappproject.api.TicketsFragment
 import com.example.webimappproject.databinding.FragmentLoginBinding
@@ -40,12 +40,13 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun openFragment(name: String){
+    private fun openFragment(name: String, token: String) {
         activity?.setTitle("YOUR TICKETS")
         val ticketsFragmentCreate = TicketsFragment.newInstance()
         //сохранение данных
         val bundle = Bundle()
         bundle.putString("name", name)
+        bundle.putString("token", token)
         ticketsFragmentCreate.arguments = bundle
 
 
@@ -57,33 +58,36 @@ class LoginFragment : Fragment() {
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance() = LoginFragment()
     }
 
-    fun request(){
+    private fun request() {
         val api = Retrofit.Builder()
             .baseUrl("https://drsoak.pythonanywhere.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiRequestsLogin::class.java)
 
-        GlobalScope.launch(Dispatchers.IO){
+        GlobalScope.launch(Dispatchers.IO) {
             val response = api
-                .getData(binding.etPassword.text.toString(),
-                    binding.etLogin.text.toString())
+                .getData(
+                    binding.etPassword.text.toString(),
+                    binding.etLogin.text.toString()
+                )
                 .awaitResponse()
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 val dataJson = response.body()!!
 
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
 
-                    if (dataJson.result == null){
-                            openFragment(dataJson.name.toString())
+                    if (dataJson.result == null) {
+                        openFragment(dataJson.name.toString(), dataJson.token.toString())
                     } else {
-                        Toast.makeText(getActivity(),
-                            "${dataJson.result.toString()}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            getActivity(),
+                            dataJson.result.toString(), Toast.LENGTH_LONG
+                        ).show()
                     }
 
 

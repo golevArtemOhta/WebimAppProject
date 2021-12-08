@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/sky"
     tools:context=".api.TicketsFragment">
 
     <LinearLayout
@@ -12,19 +13,19 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="10dp"
-            android:hint="Hello"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ListView
-            android:id="@+id/lvTickets"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:hint="Hello"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTickets"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 </FrameLayout>
